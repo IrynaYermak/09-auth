@@ -3,12 +3,11 @@ import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Error from '@/components/Error/Error';
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/clientApi';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useDebouncedCallback } from 'use-debounce';
-// import { toast, Toaster } from 'react-hot-toast';
 import css from './NotesPage.module.css';
 
 interface NotesClientProps {
