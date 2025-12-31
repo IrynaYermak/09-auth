@@ -20,7 +20,7 @@ interface createNoteProps {
   tag: string;
 }
 
-interface registerRequest {
+export interface registerRequest {
   email: string;
   password: string;
 }
@@ -83,16 +83,20 @@ export async function getMe() {
   return response.data;
 }
 
-// export async function updateMe() {
-//   const response = await api.get<User>('/users/me');
-//   return response.data;
-// }
+interface updateMeProps {
+  username?: string;
+  email?: string;
+}
+export async function updateMe({ username, email }: updateMeProps) {
+  const response = await api.patch<User>('/users/me', { username, email });
+  return response.data;
+}
 
 interface checkSessionRequest {
   success: boolean;
 }
 
-export async function chsckSession() {
+export async function checkSession() {
   const response = await api.get<checkSessionRequest>('/auth/session');
   return response.data.success;
 }

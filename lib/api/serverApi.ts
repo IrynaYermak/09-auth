@@ -19,6 +19,7 @@ export async function fetchNotes({
   page,
   tag,
 }: fetchNotesProps): Promise<fetchNotesResponse> {
+  const cookieStore = await cookies();
   const options = {
     params: {
       page,
@@ -27,7 +28,7 @@ export async function fetchNotes({
       tag,
     },
     headers: {
-      Cookie: cookies().toString(),
+      Cookie: cookieStore.toString(),
     },
   };
 
@@ -38,10 +39,11 @@ export async function fetchNotes({
 }
 
 export async function fetchNoteById(id: Note['id']): Promise<Note> {
+  const cookieStore = await cookies();
   const response = await api
     .get<Note>(`/notes/${id}`, {
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: cookieStore.toString(),
       },
     })
     .then(response => response.data);
@@ -49,9 +51,10 @@ export async function fetchNoteById(id: Note['id']): Promise<Note> {
 }
 
 export async function getMe() {
+  const cookieStore = await cookies();
   const response = await api.get<User>('/users/me', {
     headers: {
-      Cookie: cookies().toString(),
+      Cookie: cookieStore.toString(),
     },
   });
   return response.data;

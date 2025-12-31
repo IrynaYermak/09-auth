@@ -44,6 +44,7 @@ export default function NoteForm() {
 
     if (!values.title.trim()) {
       alert('Title cannot be empty.');
+      console.log('Title cannot be empty.');
       return;
     }
     mutate(values);
