@@ -8,12 +8,15 @@ import { useAuthStore } from '@/lib/store/authStore';
 
 export default function SignUp() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
   const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      const formValues = Object.fromEntries(formData) as registerRequest;
+      const formValues: registerRequest = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+      };
       const res = await register(formValues);
       if (res) {
         setUser(res);
@@ -30,6 +33,8 @@ export default function SignUp() {
     }
   };
 
+  // if (error) <p className={css.error}>{error}</p>;
+
   return (
     <main className={css.mainContent}>
       {/* <h1 className={css.formTitle}>Sign up</h1> */}
@@ -45,7 +50,6 @@ export default function SignUp() {
             required
           />
         </div>
-
         <div className={css.formGroup}>
           <label htmlFor="password">Password</label>
           <input
@@ -56,14 +60,12 @@ export default function SignUp() {
             required
           />
         </div>
-
         <div className={css.actions}>
           <button type="submit" className={css.submitButton}>
             Register
           </button>
         </div>
-
-        {/* <p className={css.error}>Error</p> */}
+        <p className={css.error}>{error}</p>
       </form>
     </main>
   );

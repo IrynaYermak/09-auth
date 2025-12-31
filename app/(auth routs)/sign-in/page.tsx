@@ -9,12 +9,15 @@ import { useAuthStore } from '@/lib/store/authStore';
 
 export default function SignIn() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
   const setUser = useAuthStore(state => state.setUser);
 
   const handleLogin = async (formData: FormData) => {
     try {
-      const formValues = Object.fromEntries(formData) as registerRequest;
+      const formValues: registerRequest = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+      };
       const res = await login(formValues);
       if (res) {
         setUser(res);

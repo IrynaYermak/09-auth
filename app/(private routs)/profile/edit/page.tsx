@@ -8,6 +8,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ApiError } from '@/app/api/api';
+import Error from '@/components/Error/Error';
+import Loading from '@/app/loading';
 
 export default function EditProfile() {
   const router = useRouter();
@@ -15,11 +17,6 @@ export default function EditProfile() {
   const setUser = useAuthStore(state => state.setUser);
 
   const { email, avatar, username } = useAuthStore(state => state.user) as User;
-
-  //   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     const username = event.target.value;
-  //     console.log('New username:', username);
-  //   };
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateMe,
@@ -35,10 +32,7 @@ export default function EditProfile() {
   });
 
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
-    // const newUsername = formData.get('username') as string;
-    // mutate({ username: newUsername, email });
-
-    e.preventDefault(); // <- блокує автоматичну дію форми
+    e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const newUsername = formData.get('username') as string;
@@ -68,7 +62,6 @@ export default function EditProfile() {
           <div className={css.usernameWrapper}>
             <label htmlFor="username">Username:</label>
             <input
-              //   onChange={handleChange}
               id="username"
               name="username"
               defaultValue={username}
@@ -96,6 +89,7 @@ export default function EditProfile() {
             </button>
           </div>
         </form>
+        {error && <Error />}
       </div>
     </main>
   );
