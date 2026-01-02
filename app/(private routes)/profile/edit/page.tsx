@@ -8,8 +8,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ApiError } from '@/app/api/api';
-import Error from '@/components/Error/Error';
-import Loading from '@/app/loading';
 
 export default function EditProfile() {
   const router = useRouter();
@@ -36,7 +34,7 @@ export default function EditProfile() {
 
     const formData = new FormData(e.currentTarget);
     const newUsername = formData.get('username') as string;
-    mutate({ username: newUsername, email });
+    mutate({ username: newUsername });
   };
 
   const handleClose = () => {
@@ -89,7 +87,12 @@ export default function EditProfile() {
             </button>
           </div>
         </form>
-        {error && <Error />}
+
+        {error && (
+          <p className={css.error}>
+            {error}, username is not allowed to be empty.
+          </p>
+        )}
       </div>
     </main>
   );

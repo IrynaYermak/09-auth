@@ -1,5 +1,9 @@
 import toast from 'react-hot-toast';
 
-export default function Error() {
-  return toast.error('There was an error, please try again...');
+interface ErrorProps {
+  message?: string;
+}
+
+export default function Error({ message }: ErrorProps) {
+  return toast.error(`There was an error ${message}, please try again...`);
 }

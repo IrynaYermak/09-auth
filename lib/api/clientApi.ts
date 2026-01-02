@@ -85,10 +85,9 @@ export async function getMe() {
 
 interface updateMeProps {
   username?: string;
-  email?: string;
 }
-export async function updateMe({ username, email }: updateMeProps) {
-  const response = await api.patch<User>('/users/me', { username, email });
+export async function updateMe({ username }: updateMeProps) {
+  const response = await api.patch<User>('/users/me', { username });
   return response.data;
 }
 
